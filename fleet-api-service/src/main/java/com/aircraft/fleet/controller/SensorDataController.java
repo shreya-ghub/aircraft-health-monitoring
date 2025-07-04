@@ -28,6 +28,57 @@ public class SensorDataController {
         }
         return dataList;
     }
+    @GetMapping("/range")
+    public List<SensorData> getDataInRange(@RequestParam long start, @RequestParam long end) {
+     List<SensorData> result = new ArrayList<>();
+        for (SensorData sd : getAllData()) {
+        long ts = Long.parseLong(sd.getTimestamp());
+        if (ts >= start && ts <= end) {
+            result.add(sd);
+        }
+    }
+    return result;
+}
+@GetMapping("/stats")
+public Map<String, Double> getSummaryStats() {
+    List<SensorData> data = getAllData();
+
+    double avgTemp = data.stream().mapToDouble(SensorData::getTemperature).average().orElse(0);
+    double minFuel = data.stream().mapToDouble(SensorData::getFuelLevel).min().orElse(0);
+    double maxVibration = data.stream().mapToDouble(SensorData::getEngineVibration).max().orElse(0);
+
+    Map<String, Double> stats = new HashMap<>();
+    stats.put("averageTemperature", avgTemp);
+    stats.put("minFuelLevel", minFuel);
+    stats.put("maxVibration", maxVibration);
+
+    return stats;
+}
+@GetMapping("/filter")
+public List<SensorData> filterByParams(
+        @RequestParam(required = false) Double tempMin,
+        @RequestParam(required = false) Double tempMax,
+        @RequestParam(required = false) Double fuelMin,
+        @RequestParam(required = false) Double fuelMax,
+        @RequestParam(required = false) Double vibrationMin,
+        @RequestParam(required = false) Double vibrationMax) {
+
+    List<SensorData> result = new ArrayList<>();
+
+    for (SensorData sd : getAllData()) {
+        if (tempMin != null && sd.getTemperature() < tempMin) continue;
+        if (tempMax != null && sd.getTemperature() > tempMax) continue;
+        if (fuelMin != null && sd.getFuelLevel() < fuelMin) continue;
+        if (fuelMax != null && sd.getFuelLevel() > fuelMax) continue;
+        if (vibrationMin != null && sd.getEngineVibration() < vibrationMin) continue;
+        if (vibrationMax != null && sd.getEngineVibration() > vibrationMax) continue;
+
+        result.add(sd);
+    }
+
+    return result;
+}
+
 
     @GetMapping("/alerts")
     public List<SensorData> getAlerts() {
