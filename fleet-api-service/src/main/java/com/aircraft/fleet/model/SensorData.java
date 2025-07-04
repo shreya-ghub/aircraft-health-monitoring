@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SensorData {
     private String timestamp;
+    
     private double temperature;
     private double fuelLevel;
     private double engineVibration;

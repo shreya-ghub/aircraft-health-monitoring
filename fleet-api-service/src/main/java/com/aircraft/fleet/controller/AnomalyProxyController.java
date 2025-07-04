@@ -7,7 +7,7 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class AnomalyProxyController {
 
-    @GetMapping("/api/anomalies")
+    @GetMapping("/api/anomalies/proxy")
     public ResponseEntity<String> getAnomalies() {
         RestTemplate restTemplate = new RestTemplate();
         String response = restTemplate.getForObject("http://localhost:3001/api/anomalies", String.class);
