@@ -30,6 +30,7 @@ Tools
 - Git & GitHub for version control
 - CSV for simulating sensor data
 - Postman for API testing
+<img width="438" alt="Screenshot 2025-07-04 at 4 24 41 PM" src="https://github.com/user-attachments/assets/c0c87872-7f84-4bb1-9a22-80490eba8da2" />
 
 
 
