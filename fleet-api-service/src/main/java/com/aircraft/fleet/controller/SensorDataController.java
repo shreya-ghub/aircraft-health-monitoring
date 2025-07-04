@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.*;
 import java.util.*;
 
+
 @RestController
 @RequestMapping("/api/sensors")
 public class SensorDataController {
@@ -90,4 +91,6 @@ public List<SensorData> filterByParams(
         }
         return alerts;
     }
+
 }
+
